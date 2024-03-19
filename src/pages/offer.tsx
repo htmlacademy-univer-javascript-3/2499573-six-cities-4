@@ -1,5 +1,19 @@
-export default function Offer() {
-    return(
+import { useParams } from 'react-router-dom';
+import NotFound from './not-found';
+
+type OfferData = {
+  id: string;
+}
+
+type OfferProps = {
+  offers: OfferData[];
+}
+
+export default function Offer({offers}: OfferProps) {
+  const params = useParams();
+  const offer = offers.find((offerInner) => offerInner.id === params.id);
+
+  return offer ? (
       <div className="page">
         <header className="header">
           <div className="container">
@@ -333,5 +347,7 @@ export default function Offer() {
           </div>
         </main>
       </div>
+      ) : (
+        <NotFound/>
     );
   }
