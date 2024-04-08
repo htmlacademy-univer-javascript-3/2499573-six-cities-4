@@ -1,3 +1,5 @@
+import React from "react";
+
 function OfferNotLoggedPage(): JSX.Element {
   return (
     <div className="page">
