@@ -1,29 +1,45 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Main from '../pages/main';
-import Login from '../pages/login';
-import Offer from '../pages/offer';
-import NotFound from '../pages/not-found';
-import Favorites from '../pages/favorites';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainPage from '../pages/main-page/main-page';
+import LoginPage from '../pages/login-page/login-page';
+import FavoritesPage from '../pages/favorites-page/favorites-page';
+import OfferPage from '../pages/offer-page/offer-page';
+import NotFoundPage from '../pages/not-found-page/not-found-page';
+import AppRoute from './const/app-link-const';
 import PrivateRoute from './private-route';
-import { AuthStatus, OFFERS_TEST } from '../utils/const';
-type AppScreenProps = {
-    placesFound: number;
-  }
-  
-  export default function App({placesFound}: AppScreenProps) {
+import AuthStatus from './const/auth-const';
+import { Offer } from '../types/offer';
+
+
+type AppPageProps = {
+  cardsNumber: number;
+  offers: Offer[];
+};
+
+
+function App({cardsNumber, offers}: AppPageProps): JSX.Element {
+  const favorites = offers.filter((o) => o.isFavorite);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
-          <Route index element={<Main placesFound={placesFound}/>} />
-          <Route path="login" element={<Login />} />
-          <Route path="favorites" element={<PrivateRoute authStatus={AuthStatus.NoAuth}><Favorites /></PrivateRoute>} />
-          <Route path="offer/">
-          <Route path=":id" element={<Offer offers={OFFERS_TEST} />} />
-          </Route>
-        </Route>
-        <Route path="*" element={<NotFound/>}/>
+        <Route path={AppRoute.Main} element={<MainPage cardsNumber = {cardsNumber} offers = {offers}/>}/>
+
+        <Route path={AppRoute.Login} element={<LoginPage/>}/>
+
+        <Route path={AppRoute.Favorites}
+          element={
+            <PrivateRoute authStatus={AuthStatus.Auth}>
+              <FavoritesPage favorites={favorites}/>
+            </PrivateRoute>
+          }
+        />
+
+        <Route path={AppRoute.Offer} element={<OfferPage/>}/>
+
+        <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
+
     </BrowserRouter>
   );
 }
+
+export default App;
