@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
-import { SETTING } from './utils/const';
+import { offers } from './mocks/offers';
+
+const Settings = {
+  cardsNumber: 312
+} as const;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,7 +13,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <h1>Hello, World!</h1>
-    <App placesFound={SETTING.placesFound}/>
+    <App cardsNumber = {Settings.cardsNumber} offers = {offers}/>
   </React.StrictMode>
 );
+
+export default Settings;
