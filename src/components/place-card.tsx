@@ -1,10 +1,13 @@
 import { Offer } from '../types/offer';
 import { Link } from 'react-router-dom';
+import { getRating } from './const/const';
+
 
 type PlaceCardProp = {
   offerInfo: Offer;
+  searchType: 'regular' | 'near';
 }
-function PlaceCard({offerInfo}: PlaceCardProp): JSX.Element {
+function PlaceCard({offerInfo, searchType}: PlaceCardProp): JSX.Element {
   const {
     id,
     previewImage,
@@ -21,7 +24,10 @@ function PlaceCard({offerInfo}: PlaceCardProp): JSX.Element {
   } = offerInfo;
 
   return (
-    <article className="cities__card place-card">
+    <article className={`${searchType === 'regular'
+      ? 'cities__card'
+      : 'near-places__card'} place-card`}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>{'Premium'}</span>
@@ -47,7 +53,7 @@ function PlaceCard({offerInfo}: PlaceCardProp): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(rating / 5) * 100}%`}}></span>
+            <span style={{width: getRating(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
