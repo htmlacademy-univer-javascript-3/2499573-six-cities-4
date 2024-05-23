@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import CardsList from '../../components/cards-list';
 import { Offer } from '../../types/offer';
 import CityMap from '../../components/city-map';
-import { useAppSelector } from '../../components/hooks/index.ts';
+import { useAppSelector } from '../../hooks/index.ts';
 import {useEffect, useState} from 'react';
 import CitiesList from '../../components/cities-list.tsx';
-import { Cities } from '../../components/const/cities.tsx';
+import { Cities } from '../../const/cities.tsx';
 
 
 type MainPageProps = {

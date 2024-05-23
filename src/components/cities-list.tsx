@@ -1,4 +1,4 @@
-import { useAppDispatch } from './hooks/index.ts';
+import { useAppDispatch } from '../hooks/index.ts';
 import { cityChange } from '../action.ts';
 
 

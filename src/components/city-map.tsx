@@ -4,8 +4,8 @@ import { City } from '../types/city';
 
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
-import useMap from './hooks/use-map';
-import { URL_MARKER_DEFAULT } from './const/const';
+import useMap from '../hooks/use-map';
+import { URL_MARKER_DEFAULT } from '../const/const';
 
 
 type CityMapProp = {

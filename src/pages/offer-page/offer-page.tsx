@@ -5,7 +5,7 @@ import ReviewsList from '../../components/reviews-list';
 import CityMap from '../../components/city-map';
 import CardsList from '../../components/cards-list';
 import { Review } from '../../types/review';
-import { AppRoute } from '../../components/const/const';
+import { AppRoute } from '../../const/const';
 
 type OfferPageProps = {
   reviews: Review[];

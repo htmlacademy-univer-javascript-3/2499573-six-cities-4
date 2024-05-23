@@ -4,11 +4,11 @@ import LoginPage from '../pages/login-page/login-page';
 import FavouritesPage from '../pages/favorites-page/favorites-page';
 import OfferPage from '../pages/offer-page/offer-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
-import { AppRoute, AuthStatus } from './const/const';
+import { AppRoute, AuthStatus } from '../const/const.tsx';
 import PrivateRoute from './private-route';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
-import { useAppDispatch, useAppSelector } from './hooks/index.ts';
+import { useAppDispatch, useAppSelector } from '../hooks/index.ts';
 import { listFilling } from '../action.ts';
 
 type AppPageProps = {
