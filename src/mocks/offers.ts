@@ -3,7 +3,7 @@ import { Offer } from '../types/offer';
 export const offers: Offer[] = [
   {
     id: '1',
-    title: 'Beautiful & luxurious studio at great location',
+    title: 'Beautiful & luxurious studio at great sslocation',
     type: 'apartment',
     price: 120,
     city: {
