@@ -1,5 +1,7 @@
 import { Offer } from '../types/offer';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../hooks';
+import {colorSelectPoint} from '../store/action';
 
 type OfferInfo = {
   offer: Offer;
@@ -7,8 +9,12 @@ type OfferInfo = {
 }
 
 function PlaceCard({offer, typeOfCard}:OfferInfo): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
     <article className = {`${typeOfCard === 'nearest' ? 'nearest__card place-card' : 'cities__card place-card'}`}>
+        onMouseOver={() => dispatch(colorSelectPoint(offer.id))}
+        onMouseLeave={() => dispatch(colorSelectPoint(null))}
+        onClick={() => window.scrollTo(0, 0)}
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
