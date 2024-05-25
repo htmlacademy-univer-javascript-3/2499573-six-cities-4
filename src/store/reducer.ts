@@ -8,12 +8,14 @@ import { Offers } from '../types/offer';
 type StateType = {
   city: string;
   offers: Offers;
+  sortOption: string;
   selectPoint: string | null;
 }
 
 const initialState: StateType = {
   city: 'Paris',
   offers: offers,
+  sortOption: 'Popular',
   selectPoint: null,
 };
 
