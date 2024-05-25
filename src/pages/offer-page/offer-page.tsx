@@ -1,59 +1,52 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
-import { Offer } from '../../types/offer';
-import CommentSubmissionForm from '../../components/comment-submission-form';
+import Logo from '../../components/logo';
+import { Link } from 'react-router-dom';
+import CommentForm from '../../components/comment-form';
+import { Reviews } from '../../types/review';
+import { offers} from '../../mocks/offers';
 import ReviewsList from '../../components/reviews-list';
-import CityMap from '../../components/city-map';
-import CardsList from '../../components/cards-list';
-import { Review } from '../../types/review';
-import { AppRoute } from '../../const/const';
+import Map from '../../components/map';
+import PlaceCard from '../../components/place-card-list';
+import { Offers } from '../../types/offer';
 
-type OfferPageProps = {
-  reviews: Review[];
-  offers: Offer[];
+type OfferProps = {
+  reviews: Reviews;
+  favorites: Offers;
+
 }
-
-function OfferPage({reviews, offers}: OfferPageProps): JSX.Element {
-  const {id} = useParams();
-  const numId = String(id);
-  const selectedOffer = offers.find((offer) => offer.id === numId);
+function OfferPage({reviews, favorites}: OfferProps): JSX.Element {
   return (
-    !selectedOffer
-      ? <Navigate to={AppRoute.NotFound} />
-      :
-      <div className="page">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <Link to='/' className="header__logo-link">
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-                </Link>
-              </div>
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <Link to="/favorites">
-                        <span className="header__favorite-count">3</span>
-                      </Link>
-                    </a>
-                  </li>
-                  <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
-                      <span className="header__signout">Sign out</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+    <div className="page">
+      <header className="header">
+        <div className="container">
+          <div className="header__wrapper">
+            <div className="header__left">
+              <Logo/>
             </div>
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <a className="header__nav-link header__nav-link--profile" href="#">
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <Link to="/favorites">
+                      <span className="header__favorite-count">{favorites.length}</span>
+                    </Link>
+                  </a>
+                </li>
+                <li className="header__nav-item">
+                  <a className="header__nav-link" href="#">
+                    <span className="header__signout">Sign out</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <main className="page__main page__main--offer">
-          <section className="offer"/>
+      <main className="page__main page__main--offer">
+        <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               <div className="offer__image-wrapper">
@@ -83,7 +76,7 @@ function OfferPage({reviews, offers}: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                    Beautiful &amp; luxurious studio at great location
+                  Beautiful &amp; luxurious studio at great location
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -101,13 +94,13 @@ function OfferPage({reviews, offers}: OfferPageProps): JSX.Element {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                    Apartment
+                  Apartment
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                    3 Bedrooms
+                  3 Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                    Max 4 adults
+                  Max 4 adults
                 </li>
               </ul>
               <div className="offer__price">
@@ -118,34 +111,34 @@ function OfferPage({reviews, offers}: OfferPageProps): JSX.Element {
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
                   <li className="offer__inside-item">
-                      Wi-Fi
+                    Wi-Fi
                   </li>
                   <li className="offer__inside-item">
-                      Washing machine
+                    Washing machine
                   </li>
                   <li className="offer__inside-item">
-                      Towels
+                    Towels
                   </li>
                   <li className="offer__inside-item">
-                      Heating
+                    Heating
                   </li>
                   <li className="offer__inside-item">
-                      Coffee machine
+                    Coffee machine
                   </li>
                   <li className="offer__inside-item">
-                      Baby seat
+                    Baby seat
                   </li>
                   <li className="offer__inside-item">
-                      Kitchen
+                    Kitchen
                   </li>
                   <li className="offer__inside-item">
-                      Dishwasher
+                    Dishwasher
                   </li>
                   <li className="offer__inside-item">
-                      Cabel TV
+                    Cabel TV
                   </li>
                   <li className="offer__inside-item">
-                      Fridge
+                    Fridge
                   </li>
                 </ul>
               </div>
@@ -156,39 +149,40 @@ function OfferPage({reviews, offers}: OfferPageProps): JSX.Element {
                     <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
-                      Angelina
+                    Angelina
                   </span>
                   <span className="offer__user-status">
-                      Pro
+                    Pro
                   </span>
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
                   </p>
                   <p className="offer__text">
-                      An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
                   </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews}/>
-                <CommentSubmissionForm />
+                <CommentForm />
               </section>
             </div>
           </div>
+
           <section className="offer__map map">
-            <CityMap city={selectedOffer.city} points={selectedOffer.nearPlaces}/>
+            <Map city={offers[0].city} points={offers.slice(0, 3)} />
           </section>
-          <div className="container">
-            <section className="near-places places"/>
+        </section>
+        <div className="container">
+          <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardsList citiesCards={selectedOffer.nearPlaces}/>
-          </div>
-        </main>
-      </div>
+            <PlaceCard offers = {offers.slice(0, 3)} typeOfList={'defoult'}/>
+          </section>
+        </div>
+      </main>
+    </div>
   );
 }
-
 export default OfferPage;

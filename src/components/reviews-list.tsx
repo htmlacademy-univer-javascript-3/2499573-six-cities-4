@@ -1,17 +1,19 @@
-import { Review } from '../types/review';
 import ReviewItem from './review-item';
+import {Reviews} from '../types/review';
 
-type ReviewsListProps = {
-  reviews: Review[];
+type ReviewList = {
+  reviews: Reviews;
 };
-function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
+
+export default function ReviewsList({ reviews }: ReviewList): JSX.Element{
   return (
-    <ul className="reviews__list">
-      {reviews.map((review) => (
-        <ReviewItem key={review.id} review={review} />
-      ))}
-    </ul>
+    <div>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+      <ul className="reviews__list">
+        {reviews.map((review) => (
+          <ReviewItem key={review.id} review={review}/>
+        ))}
+      </ul>
+    </div>
   );
 }
-
-export default ReviewsList;

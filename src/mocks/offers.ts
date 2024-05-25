@@ -2,117 +2,95 @@ import { Offer } from '../types/offer';
 
 export const offers: Offer[] = [
   {
-    'id': '0',
-    'previewImage': 'img/apartment-01.jpg',
-    'title': 'Beautiful & luxurious studio at great location',
-    'isPremium': true,
-    'isFavorite': true,
-    'type': 'Apartment',
-    'rating': 4.8,
-    'city': {
-      'name': 'Amsterdam',
-      'point': {
-        'latitude': 52.3909553943508,
-        'longitude': 4.85309666406198,
-      },
-      'zoom': 5,
+    id: '1',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 120,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 8
+      }
     },
-    'numOfBedrooms': 3,
-    'numOfGuests': 4,
-    'price': 120,
-    'masterInf': {
-      'photo':'img/avatar-angelina.jpg',
-      'name': 'Angelina',
-      'isPro': true
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 8
     },
-    'nearPlaces': []
+    isFavorite: true,
+    isPremium: true,
+    rating: 4,
+    previewImage: 'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg'
   },
-
   {
-    'id': '1',
-    'previewImage': 'img/room.jpg',
-    'title': 'Wood and stone place',
-    'isPremium': false,
-    'isFavorite': false,
-    'type': 'Room',
-    'rating': 3,
-    'city': {
-      'name': 'Amsterdam',
-      'point': {
-        'latitude': 52.3609553943508,
-        'longitude': 4.85309666406198,
-      },
-      'zoom': 5,
+    id: '2',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 80,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3609553943508,
+        longitude: 4.85309666406198,
+        zoom: 8
+      }
     },
-    'numOfBedrooms': 3,
-    'numOfGuests': 4,
-    'price': 80,
-    'masterInf': {
-      'photo':'img/avatar-angelina.jpg',
-      'name': 'Angelina',
-      'isPro': true
+    location: {
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+      zoom: 8
     },
-    'nearPlaces': []
+    isFavorite: false,
+    isPremium: false,
+    rating: 5,
+    previewImage: 'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg'
   },
-
-
   {
-    'id': '2',
-    'previewImage': 'img/apartment-02.jpg',
-    'title': 'Canal View Prinsengracht',
-    'isPremium': true,
-    'isFavorite': true,
-    'type': 'Apartment',
-    'rating': 4.8,
-    'city': {
-      'name': 'Amsterdam',
-      'point': {
-        'latitude': 52.3909553943508,
-        'longitude': 4.929309666406198,
-      },
-      'zoom': 5,
+    id: '3',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 1200,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
+        zoom: 8
+      }
     },
-    'numOfBedrooms': 3,
-    'numOfGuests': 4,
-    'price': 132,
-    'masterInf': {
-      'photo':'img/avatar-angelina.jpg',
-      'name': 'Angelina',
-      'isPro': true
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 8
     },
-    'nearPlaces': []
+    isFavorite: true,
+    isPremium: false,
+    rating: 3,
+    previewImage: 'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg'
   },
-
-
   {
-    'id': '3',
-    'previewImage': 'img/apartment-03.jpg',
-    'title': 'Nice, cozy, warm big bed apartment',
-    'isPremium': true,
-    'isFavorite': true,
-    'type': 'Apartment',
-    'rating': 4.8,
-    'city': {
-      'name': 'Amsterdam',
-      'point': {
-        'latitude': 52.3809553943508,
-        'longitude': 4.939309666406198,
-      },
-      'zoom': 5,
+    id: '4',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 200,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
+        zoom: 8
+      }
     },
-    'numOfBedrooms': 3,
-    'numOfGuests': 4,
-    'price': 180,
-    'masterInf': {
-      'photo':'img/avatar-angelina.jpg',
-      'name': 'Angelina',
-      'isPro': true
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8
     },
-    'nearPlaces': []
+    isFavorite: false,
+    isPremium: true,
+    rating: 5,
+    previewImage: 'https://w.forfun.com/fetch/85/85ae14568a42dcfeb55be68307d1a797.jpeg'
   },
 ];
-
-offers[0].nearPlaces = [offers[1], offers[2], offers[3]];
-offers[1].nearPlaces = [offers[0], offers[2], offers[3]];
-offers[2].nearPlaces = [offers[1], offers[0], offers[3]];
-offers[3].nearPlaces = [offers[1], offers[2], offers[0]];

@@ -1,27 +1,28 @@
 import { useAppDispatch } from '../hooks/index.ts';
-import { cityChange } from '../action.ts';
+import { cityChange } from '../store/action.ts';
 
 
 type CitiesListProps = {
-  cities: { name: string; id: number }[];
+  cities: {name: string; id: number}[];
 };
 
 type CityProps = {
   name: string;
-  cityChangeName: (city: string) => void;
+  changeCityName: (city: string) => void;
 };
-const City = ({name, cityChangeName}: CityProps): JSX.Element => (
-  <li className="locations__item" onClick={() => cityChangeName(name)}>
+
+const City = ({ name, changeCityName }: CityProps): JSX.Element => (
+  <li className="locations__item" onClick={() => changeCityName(name)}>
     <a className="locations__item-link tabs__item" href="#">
       <span>{name}</span>
     </a>
   </li>
 );
 
-function CitiesList({cities}: CitiesListProps): JSX.Element {
+function CitiesList({ cities }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const handleCityChange = (city: string) => {
-    dispatch(cityChange(city));
+    dispatch(cityChange((city)));
   };
   return (
     <ul className="locations__list tabs__list">
@@ -29,7 +30,7 @@ function CitiesList({cities}: CitiesListProps): JSX.Element {
         <City
           key={city.id}
           name={city.name}
-          cityChangeName={handleCityChange}
+          changeCityName={handleCityChange}
         />
       ))}
     </ul>
