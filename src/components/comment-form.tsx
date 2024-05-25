@@ -1,31 +1,30 @@
 import { ChangeEvent, useState } from 'react';
 
-type Rating = {
+type CommentInfo = {
   rating: string;
   comment: string;
 }
 
-function CommentSubmissionForm() {
-  const [formState, setFormState] = useState<Rating>({
-    rating: '',
+function CommentForm() {
+  const [formState, setFormState] = useState<CommentInfo>({
+    rating: '1',
     comment: '',
   });
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormState((prevState) => ({
       ...prevState,
-      comment: e.target.value,
+      comment: e.currentTarget.value,
     }));
   };
 
   const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState((prevState) => ({
       ...prevState,
-      rating: e.target.value,
+      rating: e.currentTarget.value,
     }));
 
   };
-
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">
@@ -153,4 +152,5 @@ function CommentSubmissionForm() {
   );
 }
 
-export default CommentSubmissionForm;
+
+export default CommentForm;

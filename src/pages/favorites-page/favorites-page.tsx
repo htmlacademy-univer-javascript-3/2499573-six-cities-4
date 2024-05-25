@@ -1,44 +1,46 @@
-import { Link } from 'react-router-dom';
-import PlaceCard from '../../components/place-card';
+import Logo from '../../components/logo'
 import { Offer } from '../../types/offer';
+import {Offers} from '../../types/offer';
+import PlaceCard from '../../components/place-card';
+import { Link } from 'react-router-dom';
 
-type FavoritesPageProp = {
-  favorites: Offer[];
-};
+type FavoriteOffer = {
+  favoriteOffers: Offers;
+}
 
-function FavoritesPage({favorites}: FavoritesPageProp): JSX.Element {
-  const favoritesMap = favorites.reduce(
-    (cityMap: Record<string, Offer[]>, place: Offer) => {
-      const city = place.city.name;
-      cityMap[city] = [...(cityMap[city] ?? []), place];
-      return cityMap;
+function FavoritesPage({favoriteOffers}:FavoriteOffer): JSX.Element {
+  const favouriteOffersMap = favoriteOffers.reduce(
+    (accumulator: Record<string, Offers>, offer: Offer) => {
+      if (offer.city.name in accumulator) {
+        accumulator[offer.city.name].push(offer);
+      } else {
+        accumulator[offer.city.name] = [offer];
+      }
+      return accumulator;
     },
     {}
   );
-
   return (
-    <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link to='/' className="header__logo-link">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </Link>
+    <div className ="page">
+      <header className ="header">
+        <div className ="container">
+          <div className ="header__wrapper">
+            <div className ="header__left">
+              <Logo/>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" >
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
+            <nav className ="header__nav">
+              <ul className ="header__nav-list">
+                <li className ="header__nav-item user">
+                  <a className ="header__nav-link header__nav-link--profile">
+                    <div className ="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className ="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className ="header__favorite-count">{favoriteOffers.length}</span>
                   </a>
                 </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
+                <li className ="header__nav-item">
+                  <a className ="header__nav-link" href="#">
+                    <span className ="header__signout">Sign out</span>
                   </a>
                 </li>
               </ul>
@@ -46,13 +48,13 @@ function FavoritesPage({favorites}: FavoritesPageProp): JSX.Element {
           </div>
         </div>
       </header>
+      <main className ="page__main page__main--favorites">
+        <div className ="page__favorites-container container">
+          <section className ="favorites">
+            <h1 className ="favorites__title">Saved listing</h1>
+            <ul className ="favorites__list">
 
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {Object.keys(favoritesMap).map((city) => (
+              {Object.keys(favouriteOffersMap).map((city) => (
                 <li className="favorites__locations-items" key={city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
@@ -62,8 +64,8 @@ function FavoritesPage({favorites}: FavoritesPageProp): JSX.Element {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {favoritesMap[city].map((place) => (
-                      <PlaceCard key={place.id} offerInfo={place} searchType='regular'/>
+                    {favouriteOffersMap[city].map((offer) => (
+                      <PlaceCard key={offer.id} offer={offer} typeOfCard = {'defoult'}></PlaceCard>
                     ))}
                   </div>
                 </li>
@@ -73,13 +75,11 @@ function FavoritesPage({favorites}: FavoritesPageProp): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link to = "/" className="footer__logo-link">
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
+        </Link>
       </footer>
-    ;
     </div>
   );
 }
-
 export default FavoritesPage;

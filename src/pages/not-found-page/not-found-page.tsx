@@ -1,9 +1,16 @@
-function NotFoundPage(): JSX.Element {
-  return (
-    <section className="error__screen">
-      <h1>404. СТРАНИЦА НЕ СУЩЕСТВУЕТ</h1>
-      <a href="/">ВЕРНУТЬСЯ НА ГЛАВНУЮ СТРАНИЦУ</a>
+
+import {Link} from 'react-router-dom';
+
+function NotFoundPage(): JSX.Element{
+  return(
+    <section className="catalog">
+      <title>СТРАНИЦА НЕ НАЙДЕНА</title>
+      <section className="catalog__screen">
+        <h1>404 сТРАНИЦЫ НЕ СУЩЕСТВУЕТ</h1>
+        <Link to="/">ВЕРНУТСЯ НА ГЛАВНУЮ</Link>
+      </section>
     </section>
   );
 }
+
 export default NotFoundPage;
