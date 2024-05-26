@@ -6,22 +6,31 @@ import FavoritesPage from '../pages/favorites-page/favorites-page';
 import OfferPage from '../pages/offer-page/offer-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 import PrivateRoute from '../components/private-route';
-import { AuthStatus } from '../const/const';
+import { AuthorizationStatus } from '../const/const';
 import { HelmetProvider } from 'react-helmet-async';
 import { Reviews } from '../types/review';
 import { Offers } from '../types/offer';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { listFilling } from '../store/action';
+import {useAppSelector } from '../hooks';
+import LoadingScreen from './loading-screen';
+
 type AppScreenProps = {
   reviews: Reviews;
 }
 
 function App({reviews}: AppScreenProps): JSX.Element{
-
   const offers: Offers = useAppSelector((state) => state.offers);
-  const dispatch = useAppDispatch();
-  dispatch(listFilling);
+
+  const authorizationStatus = useAppSelector((state) => state.AuthorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isOfferataLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
+
   const favourites = offers.filter((o) => o.isFavorite);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -38,7 +47,7 @@ function App({reviews}: AppScreenProps): JSX.Element{
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthStatus.Auth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
                 <FavoritesPage favoriteOffers = {favourites} />
               </PrivateRoute>

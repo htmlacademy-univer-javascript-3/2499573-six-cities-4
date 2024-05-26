@@ -33,7 +33,6 @@ function Map({city, points}: mapData): JSX.Element {
     (state) => state.selectPoint
   );
 
-
   useEffect(() => {
     if (map) {
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
@@ -43,7 +42,7 @@ function Map({city, points}: mapData): JSX.Element {
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      points.map((e) => e.city).forEach((point) => {
+      points.forEach((point) => {
         const marker = new Marker({
           lat: point.location.latitude,
           lng: point.location.longitude,
