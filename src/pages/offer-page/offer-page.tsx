@@ -1,5 +1,4 @@
-import Logo from '../../components/logo';
-import { Link } from 'react-router-dom';
+
 import CommentForm from '../../components/comment-form';
 import { Reviews } from '../../types/review';
 import { offers} from '../../mock/offers';
