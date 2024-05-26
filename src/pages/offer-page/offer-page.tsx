@@ -7,6 +7,7 @@ import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
 import PlaceCard from '../../components/place-card-list';
 import { Offers } from '../../types/offer';
+import Header from '../../components/header';
 
 type OfferProps = {
   reviews: Reviews;
@@ -16,35 +17,7 @@ type OfferProps = {
 function OfferPage({reviews, favorites}: OfferProps): JSX.Element {
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo/>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <Link to="/favorites">
-                      <span className="header__favorite-count">{favorites.length}</span>
-                    </Link>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header favorites={favorites}/>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
