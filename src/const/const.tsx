@@ -5,7 +5,7 @@ export enum AppRoute {
   Main = '/'
 }
 
-export enum AuthStatus {
+export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN', 
@@ -42,3 +42,11 @@ export const Cities = [
     id: 6,
   },
 ];
+
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}

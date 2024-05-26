@@ -2,7 +2,7 @@ import Logo from '../../components/logo';
 import { Link } from 'react-router-dom';
 import CommentForm from '../../components/comment-form';
 import { Reviews } from '../../types/review';
-import { offers} from '../../mocks/offers';
+import { offers} from '../../mock/offers';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
 import PlaceCard from '../../components/place-card-list';
