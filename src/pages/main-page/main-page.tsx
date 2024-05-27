@@ -1,28 +1,28 @@
-import { useEffect } from 'react';
+import {useMemo} from 'react';
 import PlacesCardList from '../../components/place-card-list';
 import Map from '../../components/map';
 import { Offers } from '../../types/offer';
-import { useState } from 'react';
 import CitiesList from '../../components/cities-list';
 import { Cities } from '../../const/const';
 import { useAppSelector } from '../../hooks';
 import SortingOptions from '../../components/sorting-options';
 import Header from '../../components/header';
+import { getCity } from '../../store/other-process/selectors';
+import { getOffers } from '../../store/offer-process/selectors';
+
 
 type MainPageProps = {
   favorites: Offers;
 }
 
 function MainPage({favorites}: MainPageProps):JSX.Element{
-  const offers = useAppSelector((state) => state.offers);
-  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector(getOffers);
+  const city = useAppSelector(getCity);
 
-  const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
-
-  useEffect(() => {
-    const filteredOffers = offers.filter((offer) => offer.city.name === city);
-    setCurrentCityOffers(filteredOffers);
-  }, [city, offers]);
+  const currentCityOffers = useMemo(
+    () => offers.filter((offer) => offer.city.name === city),
+    [offers, city]
+  );
 
 
   return(

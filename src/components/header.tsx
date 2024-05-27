@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from '../hooks/index';
 import { AppRoute, AuthorizationStatus } from '../const/const';
 import { logoutAction } from '../store/api-actions';
 import Logo from './logo';
-
+import { getAuthorizationStatus, getuserEmail } from '../store/user-process/selectors';
 
 type HeaderProps = {
   favorites: Offers;
@@ -12,8 +12,8 @@ type HeaderProps = {
 
 function Header({favorites}: HeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.AuthorizationStatus);
-  const login = useAppSelector((state) => state.login);
+  const user = useAppSelector(getAuthorizationStatus);
+  const userEmail = useAppSelector(getuserEmail);
   const handleSignOut = () => {
     dispatch(logoutAction());
   };
@@ -35,7 +35,7 @@ function Header({favorites}: HeaderProps): JSX.Element {
                   </div>
                   {user === AuthorizationStatus.Auth ? (
                     <Link to= {AppRoute.Favorites}>
-                      <span className="header__user-name user__name">{login}</span>
+                      <span className="header__user-name user__name">{userEmail}</span>
                       <span className="header__favorite-count">{favorites.length}</span>
                     </Link>
                   ) : (

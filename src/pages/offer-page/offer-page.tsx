@@ -1,4 +1,3 @@
-
 import CommentForm from '../../components/comment-form';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
@@ -10,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import { fetchOfferDataAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { AuthorizationStatus } from '../../const/const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { selectCurrentOfferData } from '../../store/selectors';
 
 type OfferProps = {
   favorites: Offers;
@@ -17,15 +18,8 @@ type OfferProps = {
 }
 function OfferPage({favorites}: OfferProps): JSX.Element {
   const { id } = useParams();
-  const user = useAppSelector((state) => state.AuthorizationStatus);
-
-  const { offerInfo, nearestOffers, reviews } = useAppSelector(
-    ({ currentOffer }) => ({
-      offerInfo: currentOffer.offerInfo,
-      nearestOffers: currentOffer.nearestOffers,
-      reviews: currentOffer.reviews,
-    })
-  );
+  const user = useAppSelector(getAuthorizationStatus);
+  const {offerInfo, nearestOffers, reviews} = useAppSelector(selectCurrentOfferData);
 
   const points: Points = nearestOffers.map((offer) => ({
     id: offer.id,
