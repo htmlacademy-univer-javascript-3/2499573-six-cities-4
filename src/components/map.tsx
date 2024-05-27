@@ -1,5 +1,5 @@
 import {Icon, Marker, layerGroup} from 'leaflet';
-import { Offers, City } from '../types/offer';
+import { City, Points } from '../types/offer';
 
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
@@ -7,10 +7,10 @@ import useMap from '../hooks/use-map';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../const/const';
 import { useAppSelector } from '../hooks';
 
-
 type mapData = {
   city: City;
-  points: Offers;
+  points: Points;
+  specialCaseId: string | undefined;
 }
 
 const defaultCustomIcon = new Icon({
@@ -25,19 +25,19 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, points}: mapData): JSX.Element {
+function Map({city, points, specialCaseId}: mapData): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const selectPoint: null | string = useAppSelector(
+  const selectPoint: null | { id: string } = useAppSelector(
     (state) => state.selectPoint
   );
 
   useEffect(() => {
-    if (map) {
+    if (map && city) {
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
-  }, [map, city]);
+  }, [points, city, map]);
 
   useEffect(() => {
     if (map) {
@@ -48,16 +48,24 @@ function Map({city, points}: mapData): JSX.Element {
           lng: point.location.longitude,
         });
 
-        marker
-          .setIcon(selectPoint !== null && point.id === selectPoint ? currentCustomIcon : defaultCustomIcon)
-          .addTo(markerLayer);
+        if (specialCaseId === undefined){
+          marker
+            .setIcon(selectPoint !== null && point.id === selectPoint.id ? currentCustomIcon : defaultCustomIcon)
+            .addTo(markerLayer);
+        } else {
+          const isSpecialCase = specialCaseId && point.id === specialCaseId;
+          marker
+            .setIcon(isSpecialCase ? currentCustomIcon : defaultCustomIcon)
+            .addTo(markerLayer);
+        }
       });
 
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectPoint]);
+  }, [map, points, selectPoint, specialCaseId]);
+
 
   return (
     <div
