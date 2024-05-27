@@ -44,7 +44,7 @@ function MainPage({favorites}: MainPageProps):JSX.Element{
               <PlacesCardList offers={currentCityOffers} typeOfList={'defoult'}/>
             </section>
             <section className="cities__map map">
-              <Map city={currentCityOffers.length > 0 ? currentCityOffers[0].city : offers[0].city} points={currentCityOffers}/>
+            <Map city={currentCityOffers.length > 0 ? currentCityOffers[0].city : offers[0].city} points={currentCityOffers} specialCaseId={undefined}/>
 
             </section>
           </div>
