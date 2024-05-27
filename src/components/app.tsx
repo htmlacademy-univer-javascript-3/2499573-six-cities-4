@@ -13,13 +13,15 @@ import {useAppSelector } from '../hooks';
 import HistoryRouter from '../browser/history-router/history-router';
 import browserHistory from '../browser/browser-history/browser-history';
 import LoadingScreen from '../pages/loading-screen/loading-screen';
+import { getIsOffersDataLoading, getOffers } from '../store/offer-process/selectors';
+import { getAuthorizationStatus } from '../store/user-process/selectors';
+
 
 
 function App(): JSX.Element{
-  const offers: Offers = useAppSelector((state) => state.offers);
-
-  const authorizationStatus = useAppSelector((state) => state.AuthorizationStatus);
-  const isOffersDataLoading = useAppSelector((state) => state.isOfferataLoading);
+  const offers: Offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
