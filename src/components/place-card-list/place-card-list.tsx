@@ -1,9 +1,9 @@
-import {Offers} from '../types/offer';
-import PlaceCard from './place-card';
-import sortingFunction from '../util';
-import { useAppSelector } from '../hooks';
+import {Offers} from '../../types/offer';
+import PlaceCard from '../place-card/place-card';
+import sortingFunction from '../../util';
+import { useAppSelector } from '../../hooks';
 import { memo } from 'react';
-import { getSortingOption } from '../store/other-process/selectors';
+import { getSortingOption } from '../../store/other-process/selectors';
 
 type PlaceCardList = {
   offers: Offers;

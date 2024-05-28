@@ -1,19 +1,22 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch, State} from '../types/state';
+import {AppDispatch, State} from '../types/state.ts';
 import {AxiosInstance} from 'axios';
-import {FullOffer, Offer, Offers} from '../types/offer';
-import { redirectToRoute} from './action';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, AppRoute} from '../const/const';
+import {FullOffer, Offer, Offers} from '../types/offer.ts';
+import { redirectToRoute} from './action.ts';
+import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const/const.ts';
 
-import {dropToken, saveToken } from '../service/token';
-import { UserData } from '../types/user-data';
-import { AuthData } from '../types/auth-data';
-import { store } from './index';
-import { Review, Reviews } from '../types/review';
-import { CommentData } from '../types/comment-data';
-import { loadOfferData, loadOffers, sendReview, setOffersDataLoadingStatus } from './offer-process/offer-process';
-import { requireAuthorization, saveUserEmail } from './user-process/user-process';
-import { setError } from './other-process/other-process';
+import {dropToken, saveToken } from '../service/token.ts';
+import { UserData } from '../types/user-data.ts';
+import { AuthData } from '../types/auth-data.ts';
+import { store } from './index.ts';
+import { Review, Reviews } from '../types/review.ts';
+import { CommentData } from '../types/comment-data.ts';
+import { loadFavorites, loadOfferData, loadOffers, sendReview, setOffersDataLoadingStatus, updateOffers } from './offer-process/offer-process.ts';
+import { requireAuthorization} from './user-process/user-process.ts';
+import { setError } from './other-process/other-process.ts';
+import { CheckButton } from '../types/check-buttons.ts';
+import { dropLogin, saveLogin } from '../service/login-util.ts';
+import { dropAvatar, saveAvatar } from '../service/avatar.ts';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -25,10 +28,9 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<Offer[]>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
-    dispatch(loadOffers(data));
+    dispatch(loadOffers(data));//помещает наши данные в хранилище
   },
 );
-
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -43,45 +45,6 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
-  },
-);
-
-
-export const loginAction = createAsyncThunk<void, AuthData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'user/login',
-  async ({login: login, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {login, password});
-    saveToken(token);
-    dispatch(saveUserEmail(login));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
-  },
-);
-
-export const logoutAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'six-cities/login',
-  async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-  },
-);
-
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
   },
 );
 
@@ -108,6 +71,75 @@ export const fetchOfferDataAction = createAsyncThunk<
   dispatch(loadOfferData({ offerInfo, nearestOffers, reviews }));
 });
 
+export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offer[]>(`${APIRoute.Favorite}`);
+    dispatch(loadFavorites(data));
+  },
+);
+
+export const changeFavouriteStatusAction = createAsyncThunk<void, CheckButton, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'changeFavoriteStatus',
+    async ({status, offerId}, {extra: api, dispatch}) => {
+      const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+      dispatch(updateOffers(data));
+      dispatch(fetchFavoritesAction());
+    },
+  );
+
+export const loginAction = createAsyncThunk<void, AuthData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/login',
+  async ({login: login, password}, {dispatch, extra: api}) => {
+    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {login, password});
+    saveToken(token);
+    saveLogin(login);
+    dispatch(fetchOffersAction());
+    dispatch(fetchFavoritesAction());
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
+    const {data } = await api.get<UserData>(APIRoute.Login);
+    saveAvatar(data.avatar);
+
+  },
+);
+
+export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'six-cities/login',
+  async (_arg, {dispatch, extra: api}) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+    dropLogin();
+    dropAvatar();
+    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  },
+);
+
+export const clearErrorAction = createAsyncThunk(
+  'clearError',
+  () => {
+    setTimeout(
+      () => store.dispatch(setError(null)),
+      TIMEOUT_SHOW_ERROR,
+    );
+  },
+);
 
 export const sendCommentAction = createAsyncThunk<
   void,
