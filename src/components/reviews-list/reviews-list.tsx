@@ -1,5 +1,5 @@
-import ReviewItem from './review-item';
-import {Reviews} from '../types/review';
+import ReviewItem from '../review-item/review-item';
+import {Reviews} from '../../types/review';
 
 type ReviewList = {
   reviews: Reviews;

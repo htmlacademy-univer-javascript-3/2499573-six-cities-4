@@ -1,8 +1,8 @@
-import CommentForm from '../../components/comment-form';
-import ReviewsList from '../../components/reviews-list';
-import Map from '../../components/map';
-import PlaceCard from '../../components/place-card-list';
-import Header from '../../components/header';
+import CommentForm from '../../components/comment-form/comment-form';
+import ReviewsList from '../../components/reviews-list/reviews-list';
+import Map from '../../components/map/map';
+import PlaceCard from '../../components/place-card-list/place-card-list';
+import Header from '../../components/header/header';
 import { Offers, Points } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { AuthorizationStatus } from '../../const/const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { selectCurrentOfferData } from '../../store/selectors';
+import AddToFavouritesButton from '../../components/add-to-favorites/add-to-favorites';
 
 type OfferProps = {
   favorites: Offers;
@@ -66,12 +67,16 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offerInfo.title}</h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <AddToFavouritesButton
+                  id={offerInfo.id}
+                  isFavorite={offerInfo.isFavorite}
+                  width='31'
+                  heigth='33'
+                  buttonClass="place-card__bookmark-button"
+                  activeClass="place-card__bookmark-button--active"
+                  iconClass="place-card__bookmark-icon"
+                  buttonText="In bookmarks"
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

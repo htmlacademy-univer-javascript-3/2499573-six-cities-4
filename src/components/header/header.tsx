@@ -1,10 +1,13 @@
 import {Link} from 'react-router-dom';
-import {Offers} from '../types/offer';
-import {useAppDispatch, useAppSelector} from '../hooks/index';
-import { AppRoute, AuthorizationStatus } from '../const/const';
-import { logoutAction } from '../store/api-actions';
-import Logo from './logo';
-import { getAuthorizationStatus, getuserEmail } from '../store/user-process/selectors';
+import {Offers} from '../../types/offer.ts';
+import {useAppDispatch, useAppSelector} from '../../hooks/index.ts';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
+import { logoutAction } from '../../store/api-actions.ts';
+import Logo from '../logo/logo.tsx';
+import { getAuthorizationStatus} from '../../store/user-process/selectors.ts';
+import { getLogin } from '../../service/login-util.ts';
+import { getAvatar } from '../../service/avatar.ts';
+
 
 type HeaderProps = {
   favorites: Offers;
@@ -13,7 +16,8 @@ type HeaderProps = {
 function Header({favorites}: HeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector(getAuthorizationStatus);
-  const userEmail = useAppSelector(getuserEmail);
+  const userLogin = getLogin();
+  const avatar = getAvatar();
   const handleSignOut = () => {
     dispatch(logoutAction());
   };
@@ -31,11 +35,23 @@ function Header({favorites}: HeaderProps): JSX.Element {
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 <div className="header__nav-link header__nav-link--profile">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
+                  {user === AuthorizationStatus.Auth ? (
+                    <img src={avatar} className="header__avatar-wrapper"
+                      style={{
+                        borderRadius: '50%',
+                        width: '81',
+                        height: '41',
+                        marginRight: '8px',
+                      }}
+                    >
+                    </img>
+                  ) : (
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                  )}
                   {user === AuthorizationStatus.Auth ? (
                     <Link to= {AppRoute.Favorites}>
-                      <span className="header__user-name user__name">{userEmail}</span>
+                      <span className="header__user-name user__name">{userLogin}</span>
                       <span className="header__favorite-count">{favorites.length}</span>
                     </Link>
                   ) : (

@@ -1,8 +1,8 @@
 import {useState} from 'react';
-import { useAppSelector } from '../hooks';
-import { useAppDispatch } from '../hooks';
-import { getSortingOption } from '../store/other-process/selectors';
-import { sortTypeSelect } from '../store/other-process/other-process';
+import { useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
+import { getSortingOption } from '../../store/other-process/selectors';
+import { sortTypeSelect } from '../../store/other-process/other-process';
 
 function SortingOptions(): JSX.Element{
   const [isOpen, setIsOpen] = useState(false);

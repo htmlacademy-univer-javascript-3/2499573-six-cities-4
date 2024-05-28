@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const/const';
 import {OtherState} from '../../types/state.ts';
 
+
 const initialState: OtherState = {
   city: 'Paris',
   sortingOption: 'Popular',
