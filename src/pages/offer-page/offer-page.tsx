@@ -147,7 +147,7 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlaceCard offers = {nearestOffers.slice(0, 3)} typeOfList={'defoult'}/>
+            <PlaceCard offers = {nearestOffers.slice(0, 3)} typeOfList={'typical'}/>
           </section>
         </div>
       </main>

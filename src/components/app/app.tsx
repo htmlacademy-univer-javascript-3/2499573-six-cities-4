@@ -22,6 +22,7 @@ import { getCity } from '../../store/other-process/selectors';
 function App(): JSX.Element{
   const favorites: Offers = useAppSelector(getFavorites);
   const city = useAppSelector(getCity);
+
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
@@ -30,10 +31,9 @@ function App(): JSX.Element{
       <LoadingScreen/>
     );
   }
-
   return (
     <HelmetProvider>
-       <HistoryRouter history={browserHistory}>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -41,13 +41,13 @@ function App(): JSX.Element{
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage />}
+            element={<LoginPage/>}
           />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
+                authorizationStatus={authorizationStatus}
               >
                 <FavoritesPage favoriteOffers = {favorites} />
               </PrivateRoute>
@@ -59,7 +59,7 @@ function App(): JSX.Element{
           />
           <Route
             path="*"
-            element={<NotFoundPage />}
+            element={<NotFoundPage/>}
           />
         </Routes>
       </HistoryRouter>
