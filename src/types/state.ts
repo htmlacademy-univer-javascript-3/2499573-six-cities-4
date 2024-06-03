@@ -1,4 +1,4 @@
-import { store } from '../store/index';
+import { store } from '../store';
 import { AuthorizationStatus } from '../const/const';
 import { FullOffer, Offers } from './offer';
 import { Reviews } from './review';

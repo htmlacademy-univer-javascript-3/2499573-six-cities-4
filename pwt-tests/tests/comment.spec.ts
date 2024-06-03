@@ -18,7 +18,7 @@ test('Отправка комментария', async ({ page }) => {
   await page.goto('http://localhost:5173/login');
 
   await page.fill('input[name="email"]', 'YouKnowWhoIAm@mail.ru');
-  await page.fill('input[name="password"]', 'IamWealthyMan');
+  await page.fill('input[name="password"]', 'IamWealthyMan1');
   await page.click('button[type="submit"]');
 
   await page.waitForSelector('.cities__card');
