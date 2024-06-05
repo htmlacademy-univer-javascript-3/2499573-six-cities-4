@@ -5,12 +5,9 @@ import { AppRoute } from '../../const/const';
 
 function NotFoundPage(): JSX.Element{
   return(
-    <section className="catalog">
-      <title>СТРАНИЦА НЕ НАЙДЕНА</title>
-      <section className="catalog__screen">
-        <h1>404 сТРАНИЦЫ НЕ СУЩЕСТВУЕТ</h1>
-        <Link to={AppRoute.Main}>ВЕРНУТСЯ НА ГЛАВНУЮ</Link>
-      </section>
+    <section className="catalog__screen">
+    <h1>404. PAGE NOT FOUND</h1>
+    <Link to={AppRoute.Main} >BACK TO MAIN</Link>
     </section>
   );
 }
