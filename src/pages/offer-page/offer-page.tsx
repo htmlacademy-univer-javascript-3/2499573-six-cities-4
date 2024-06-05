@@ -41,6 +41,7 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
   useEffect(() => {
     dispatch(fetchOfferDataAction({ id: id ?? '' }));
   }, [dispatch, id]);
+  
   if (!offerInfo) {
     return (
       <div className="container">
