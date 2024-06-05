@@ -2,7 +2,7 @@ import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { highlightMarker } from '../../store/offer-process/offer-process';
-import AddToFavouritesButton from '../../components/add-to-favorites/add-to-favorites';
+import AddToFavouritesButton from '../add-to-favorites/add-to-favorites';
 
 type OfferInfo = {
   offer: Offer;

@@ -1,5 +1,5 @@
 import {Offers} from '../../types/offer';
-import PlaceCard from '../place-card/place-card';
+import PlaceCard from '../place-cards/place-card';
 import sortingFunction from '../../util';
 import { useAppSelector } from '../../hooks';
 import { memo } from 'react';
@@ -10,7 +10,7 @@ type PlaceCardList = {
   typeOfList: 'typical' | 'near';
 };
 
-function PlacesCardList({offers, typeOfList}: PlaceCardList): JSX.Element {
+function PlacesCardList({offers, typeOfList}: PlaceCardList){
   const currnetSortOptions = useAppSelector(getSortingOption);
 
   return (
