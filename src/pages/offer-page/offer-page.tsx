@@ -1,7 +1,6 @@
 import CommentForm from '../../components/comment-form/comment-form';
-import ReviewsList from '../../components/reviews-list/reviews-list';
+import ReviewsList from '../../components/reviews/review-list';
 import Map from '../../components/map/map';
-import PlaceCard from '../../components/place-card-list/place-card-list';
 import Header from '../../components/header/header';
 import { Offers, Points } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -12,6 +11,8 @@ import { AuthorizationStatus } from '../../const/const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { selectCurrentOfferData } from '../../store/selectors';
 import AddToFavouritesButton from '../../components/add-to-favorites/add-to-favorites';
+import PlacesCardList from '../../components/place-cards/place-card-list';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 type OfferProps = {
   favorites: Offers;
@@ -41,7 +42,11 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
     dispatch(fetchOfferDataAction({ id: id ?? '' }));
   }, [dispatch, id]);
   if (!offerInfo) {
-    return <div className="container">Loading</div>;
+    return (
+      <div className="container">
+        <NotFoundPage/>
+      </div>
+    );
   }
 
   return (
@@ -147,7 +152,7 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlaceCard offers = {nearestOffers.slice(0, 3)} typeOfList={'typical'}/>
+            <PlacesCardList offers = {nearestOffers.slice(0, 3)} typeOfList={'typical'}/>
           </section>
         </div>
       </main>

@@ -2,7 +2,7 @@ import {Icon, Marker, layerGroup} from 'leaflet';
 import { City, Points } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
-import useMap from '../../hooks/use-map';
+import useMap from '../use-map/use-map';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const/const';
 import { useAppSelector } from '../../hooks';
 import { getselectPoint } from '../../store/offer-process/selectors';
