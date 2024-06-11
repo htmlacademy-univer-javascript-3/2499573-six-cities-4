@@ -18,7 +18,6 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { getCity } from '../../store/other-process/selectors';
 
 
-
 function App(): JSX.Element{
   const favorites: Offers = useAppSelector(getFavorites);
   const city = useAppSelector(getCity);

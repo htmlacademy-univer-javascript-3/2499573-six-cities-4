@@ -15,15 +15,15 @@ export type Point = {
     id: string;
     location: Location;
 }
-  
+
 export type Points = Point[];
-  
-  
+
+
 export type City = {
     name: string;
     location: Location;
 }
-  
+
 export type Location = {
     latitude: number;
     longitude: number;
@@ -35,7 +35,7 @@ type Host = {
     avatarUrl: string;
     isPro: boolean;
 }
-  
+
 export type FullOffer = Omit<Offer, 'previewImage'> & {
     description: string;
     bedrooms: number;
@@ -44,5 +44,5 @@ export type FullOffer = Omit<Offer, 'previewImage'> & {
     maxAdults: number;
     images: string[];
 }
-  
+
 export type Offers = Offer[];

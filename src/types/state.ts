@@ -7,28 +7,28 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-
 export type UserState = {
-    authorizationStatus: AuthorizationStatus;
-    userLogin: string | null;
+  authorizationStatus: AuthorizationStatus;
+  userLogin: string | null;
 };
-  
+
 export type OffersState = {
-    currentOffer: {
+  currentOffer: {
     offerInfo: FullOffer | null;
     nearestOffers: Offers;
     reviews: Reviews;
-    };
-    offers: Offers;
-    selectPoint: {
-      id: string;
-    } | null;
-    isOffersDataLoading: boolean;
+  };
+  offers: Offers;
+  selectPoint: {
+    id: string;
+  } | null;
+  isOffersDataLoading: boolean;
+  favorites: Offers;
 };
-  
+
 export type OtherState = {
-    city: string;
-    sortingOption: string;
-    error: string | null;
-    favorites: Offers;
+  city: string;
+  sortingOption: string;
+  error: string | null;
+  favorites?: Offers;
 };
