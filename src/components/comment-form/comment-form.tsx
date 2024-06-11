@@ -1,6 +1,7 @@
-import { useState,ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { sendCommentAction } from '../../store/api-actions';
+import { PAGINATION } from '../../const/const';
 
 type CommentProps = {
   id: string;
@@ -9,7 +10,7 @@ type CommentProps = {
 type CommentInfo = {
   rating: string;
   comment: string;
-}
+};
 
 function CommentForm({ id }: CommentProps) {
   const [formState, setFormState] = useState<CommentInfo>({
@@ -33,7 +34,9 @@ function CommentForm({ id }: CommentProps) {
     }));
   };
   const isValid = () =>
-    formState.comment.trim().length > 49 && formState.comment.trim().length < 300 && formState.rating !== '';
+    formState.comment.trim().length > PAGINATION.minCommentLength &&
+    formState.comment.trim().length < PAGINATION.maxCommentLength &&
+    formState.rating !== '';
 
   const handleFromSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -52,7 +55,6 @@ function CommentForm({ id }: CommentProps) {
       rating: '',
       comment: '',
     }));
-
   };
   return (
     <form className="reviews__form form" onSubmit={handleFromSubmit}>
@@ -172,7 +174,7 @@ function CommentForm({ id }: CommentProps) {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled = {!isValid()}
+          disabled={!isValid()}
         >
           Submit
         </button>
@@ -180,6 +182,5 @@ function CommentForm({ id }: CommentProps) {
     </form>
   );
 }
-
 
 export default CommentForm;

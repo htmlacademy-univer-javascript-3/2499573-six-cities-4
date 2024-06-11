@@ -6,8 +6,8 @@ import { Offers, Points } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { fetchOfferDataAction } from '../../store/api-actions';
-import { useEffect } from 'react';
-import { AuthorizationStatus } from '../../const/const';
+import { useEffect, useState } from 'react';
+import { AuthorizationStatus, PAGINATION } from '../../const/const';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { selectCurrentOfferData } from '../../store/selectors';
 import AddToFavouritesButton from '../../components/add-to-favorites/add-to-favorites';
@@ -16,19 +16,21 @@ import NotFoundPage from '../not-found-page/not-found-page';
 
 type OfferProps = {
   favorites: Offers;
-
-}
-function OfferPage({favorites}: OfferProps): JSX.Element {
+};
+function OfferPage({ favorites }: OfferProps): JSX.Element {
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const user = useAppSelector(getAuthorizationStatus);
-  const {offerInfo, nearestOffers, reviews} = useAppSelector(selectCurrentOfferData);
+  const { offerInfo, nearestOffers, reviews } = useAppSelector(
+    selectCurrentOfferData
+  );
 
   const points: Points = nearestOffers.map((offer) => ({
     id: offer.id,
     location: offer.location,
   }));
 
-  const mapPoints: Points = points.slice(0, 3);
+  const mapPoints: Points = points.slice(0, PAGINATION.nearbyPointsLimit);
 
   if (offerInfo) {
     mapPoints.push({
@@ -39,27 +41,37 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchOfferDataAction({ id: id ?? '' }));
+    dispatch(fetchOfferDataAction({ id: id ?? '' }))
+      .unwrap()
+      .finally(() => setIsLoading(false));
   }, [dispatch, id]);
-  
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
   if (!offerInfo) {
     return (
       <div className="container">
-        <NotFoundPage/>
+        <NotFoundPage />
       </div>
     );
   }
 
   return (
     <div className="page">
-      <Header favorites={favorites}/>
+      <Header favorites={favorites} />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {offerInfo.images.map((url) => (
                 <div className="offer__image-wrapper" key={url}>
-                  <img className="offer__image" src={url} alt="Photo studio" />
+                  <img
+                    className="offer__image"
+                    src={url}
+                    alt={offerInfo.title}
+                  />
                 </div>
               ))}
             </div>
@@ -76,17 +88,19 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
                 <AddToFavouritesButton
                   id={offerInfo.id}
                   isFavorite={offerInfo.isFavorite}
-                  width='31'
-                  heigth='33'
-                  buttonClass="place-card__bookmark-button"
-                  activeClass="place-card__bookmark-button--active"
-                  iconClass="place-card__bookmark-icon"
+                  width="31"
+                  heigth="33"
+                  buttonClass="offer__bookmark-button"
+                  activeClass="offer__bookmark-button--active"
+                  iconClass="offer__bookmark-icon"
                   buttonText="In bookmarks"
                 />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${(offerInfo.rating / 5) * 100}%` }}/>
+                  <span
+                    style={{ width: `${Math.round(offerInfo.rating) * 20}%` }}
+                  />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">
@@ -98,10 +112,14 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
                   {offerInfo.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {`${offerInfo.bedrooms} Bedrooms`}
+                  {`${offerInfo.bedrooms} ${
+                    offerInfo.bedrooms === 1 ? 'Bedroom' : 'Bedrooms'
+                  }`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  {`Max ${offerInfo.maxAdults} adults`}
+                  {`Max ${offerInfo.maxAdults} ${
+                    offerInfo.maxAdults === 1 ? 'adult' : 'Adults'
+                  }`}
                 </li>
               </ul>
               <div className="offer__price">
@@ -126,7 +144,13 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
                       offerInfo.host.isPro ? 'offer__avatar-wrapper--pro' : ''
                     } user__avatar-wrapper`}
                   >
-                    <img className="offer__avatar user__avatar" src={offerInfo.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
+                    <img
+                      className="offer__avatar user__avatar"
+                      src={offerInfo.host.avatarUrl}
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
                   </div>
                   <span className="offer__user-name">
                     {offerInfo.host.name}
@@ -140,20 +164,31 @@ function OfferPage({favorites}: OfferProps): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewsList reviews={reviews}/>
+                <ReviewsList reviews={reviews} />
                 {user === AuthorizationStatus.Auth && <CommentForm id={id!} />}
               </section>
             </div>
           </div>
 
           <section className="offer__map map">
-            <Map city={nearestOffers[0].city} points={mapPoints} specialCaseId={offerInfo.id}/>
+            {nearestOffers && nearestOffers.length > 0 && (
+              <Map
+                city={nearestOffers[0].city}
+                points={mapPoints}
+                specialCaseId={offerInfo.id}
+              />
+            )}
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesCardList offers = {nearestOffers.slice(0, 3)} typeOfList={'typical'}/>
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <PlacesCardList
+              offers={nearestOffers.slice(0, PAGINATION.nearbyPointsLimit)}
+              typeOfList={'typical'}
+            />
           </section>
         </div>
       </main>

@@ -1,20 +1,19 @@
-export enum AppRoute {
+export const enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
-  Main = '/'
+  Main = '/',
 }
 
-export enum AuthorizationStatus {
+export const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN', 
+  Unknown = 'UNKNOWN',
 }
 
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
-
 
 export const Cities = [
   {
@@ -45,7 +44,7 @@ export const Cities = [
 
 export const TIMEOUT_SHOW_ERROR = 2000;
 
-export enum APIRoute {
+export const enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
@@ -53,15 +52,20 @@ export enum APIRoute {
   Favorite = '/favorite',
 }
 
-export enum FavouriteStatus {
+export const enum FavouriteStatus {
   Add = 1,
   Remove = 0,
 }
 
-
-
-export enum NameSpace {
+export const enum NameSpace {
   Other = 'OTHER',
   Offers = 'OFFERS',
   User = 'USER',
 }
+
+export const PAGINATION = {
+  minCommentLength: 49,
+  maxCommentLength: 300,
+  reviewLimit: 10,
+  nearbyPointsLimit: 3,
+};
